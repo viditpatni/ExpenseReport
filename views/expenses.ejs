@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+       <tr>
+        <th>Date</th>
+        <th>Medical Expense</th>
+        <th>Entertainment</th>
+        <th>Bills</th>
+        <th>groceries</th>
+        <th>investments</th>
+        <th>gifts</th>
+        <th>huge expense</th>
+        <th>miscellaneous</th>
+        <th>Total</th>
+        <th>Remarks</th>
+        <th>Sources</th>
+       </tr>
+       <% arr.forEach(element=>{ %>
+       <tr>
+       
+            <td><%= element.date %></td>
+            <td><%= element.Medical %></td>
+            <td><%= element.Entertainment %></td>
+            <td><%= element.Bills %></td>
+            <td><%= element.Groceries %></td>
+            <td><%= element.Investment %></td>
+            <td><%= element.Gifts %></td>
+            <td><%= element.HugeExpense %></td>
+            <td><%= element.Miscellaneous %></td>
+            <td><%= element.Total %></td>
+            <td><%= element.Remarks %></td>
+            <td><%= element.Source %></td>
+            <td><button id="<%= element.date %> + <%= element.userId %>">Edit</button></td>
+       
+       </tr>
+       <% }); %>
+    </table>
+
+    <form action="/expenses/api/v1/getExpenseMonth" method="get">
+        <input type="number" name="year">
+        <input type="number" name="month">
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+        <form action="/expenses/api/v1/addExpense" method="post">
+            <input type="date" name="date">
+            <input type="number" name="Medical" value="0">
+            <input type="number" name="Entertainment" value="0">
+            <input type="number" name="Bills" value="0">
+            <input type="number" name="Groceries" value="0">
+            <input type="number" name="Investment" value="0">
+            <input type="number" name="Gifts" value="0">
+            <input type="number" name="HugeExpense" value="0">
+            <input type="number" name="Miscellaneous" value="0">
+            <input type="text" name="Remarks">
+            <input type="text" name="Source">
+            <button type="submit">Add Expense</button>
+        </form>
+</body>
+</html>
