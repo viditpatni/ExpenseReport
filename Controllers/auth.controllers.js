@@ -27,7 +27,7 @@ exports.signUp= async (req, res)=>{
     })
 
     jwt.sign({id:user.id}, process.env.SECRET_KEY,{expiresIn:86400}, (err, token)=>{
-        const url = `https://expense-report-node.herokuapp.com//confirmation/${token}`;
+        const url = `https://expense-report-node.herokuapp.com/confirmation/${token}`;
 
         transport.sendMail({
             to:email,
