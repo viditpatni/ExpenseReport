@@ -1,4 +1,4 @@
-const signUpValidator=require("../Middlewares/signUpValidator");
+const signUpValidator=require("../MiddleWares/signUpValidator");
 const authControllers=require("../Controllers/auth.controllers");
 const authJWT=require("../MiddleWares/authJWT")
 
