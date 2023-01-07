@@ -2,7 +2,7 @@
   "name": "expensereport",
   "version": "1.0.0",
   "description": "Platform to track and manage expenses daily",
-  "main": "index.js",
+  "web": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
