@@ -1,0 +1,87 @@
+<%- include("header", {userName:userName}) -%>
+
+    <div class="d-flex justify-content-start mx-3" style="margin-top: 60px;">
+        <div id="plot"> </div>
+        <div>
+            <div class="row">
+
+                <div class="col-sm-12 mb-2">
+
+                    <div class="card">
+            <h4 class="text-center mt-4">50/30/20 Rule of Budgeting:</h4>
+            
+                        <div class="card-body">
+                            <h5 class="card-title">Needs: 50%</h5>
+                            <p class="card-text">Needs are the things which you absolutely require for your survival or
+                                must necessarily do to live. Needs are activities like paying bills, fetching groceries
+                                and food, paying rent, paying the mortgage, insurance premiums, minimum debt repayments
+                                and more such obligations that you must fulfill to live peacefully.</p>
+
+                            <p class="card-text"> According to this rule, half of your after-tax income can be used to
+                                take care of such things which are always on the urgent list with money. If you fail to
+                                make these payments, you will either be in trouble or will end up gathering more such
+                                obligation for the next month which will most likely include interest charged on the
+                                late payment.</p>
+
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Wants: 30% </h5>
+                            <p class="card-text">As the name suggests, “ Wants” are the niceties that money can buy. In
+                                simpler terms, these are not what you need for basic survival, but something that you
+                                aspire for. Wants include occasional dining, movie outings,
+                                leisure travel, seasonal shopping, etc. As you can
+                                see, the list of “ wants” is never-ending and if unregulated, it can encroach over the
+                                savings bucket as well.</p>
+                            <p class="card-text">To regulate your wants section, you can do several things. The first
+                                thing you can do is not go on retail therapy and waste money on useless things. While it
+                                is good to pamper yourself, be a judicious shopper, make sure the thing or experience
+                                you buy is worth the money and that you are making this purchase because you absolutely
+                                want to and not under peer pressure. The second thing is to not give in to instant
+                                gratification and space out your purchases.</p>
+                                </div>
+                                <div class="card-body">
+                            <h5 class="card-title">Investment: 20%</h5>
+                            <p class="card-text">While needs and wants cater to your well being in the present, the
+                                savings bucket is what will sail you through in the future. This bucket is perhaps the
+                                most important and yet the most ignored.</p>
+                            <p class="card-text">As the 50-30-20 rule dictates, 20 percent of your post-tax income must
+                                be saved and then utilized through investments. Please note, unlike needs and wants,
+                                savings should be non-negotiable and need to be a top priority. If it means that you
+                                have to temporarily stall that Leh trip with the boys on the bullet, so be it.
+                                Everything can wait but your investments and savings shouldn’t suffer, period.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const config = {
+            displayModeBar: false, // this is the line that hides the bar.
+        };
+
+        var data = [{
+            values: ["<%= result.need%>", "<%= result.want%>", "<%= result.investment%>"],
+            labels: ["Need", "Want", "Investment"],
+            type: 'pie',
+            automargin: true,
+            textinfo: "label+percent",
+            insidetextorientation: "radial",
+            marker: {
+                colors: ['rgb(0,191,255)', 'rgb(255,0,0)', 'rgb(0,255,0)']
+            }
+        }];
+
+        var layout = {
+            title: "Current year's Expenses Insight",
+            height: 600,
+            width: 600,
+            showlegend: false
+        };
+
+        Plotly.newPlot('plot', data, layout, config);
+
+
+    </script>

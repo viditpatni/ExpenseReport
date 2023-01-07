@@ -1,53 +1,333 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <table>
-       <tr>
-        <th>Date</th>
-        <th>Medical Expense</th>
-        <th>Entertainment</th>
-        <th>Bills</th>
-        <th>groceries</th>
-        <th>investments</th>
-        <th>gifts</th>
-        <th>huge expense</th>
-        <th>miscellaneous</th>
-        <th>Total</th>
-        <th>Remarks</th>
-        <th>Sources</th>
-       </tr>
-       <% arr.forEach(element=>{ %>
-       <tr>
-       
-            <td><%= element.date %></td>
-            <td><%= element.Medical %></td>
-            <td><%= element.Entertainment %></td>
-            <td><%= element.Bills %></td>
-            <td><%= element.Groceries %></td>
-            <td><%= element.Investment %></td>
-            <td><%= element.Gifts %></td>
-            <td><%= element.HugeExpense %></td>
-            <td><%= element.Miscellaneous %></td>
-            <td><%= element.Total %></td>
-            <td><%= element.Remarks %></td>
-            <td><%= element.Source %></td>
-            <td><button id="<%= element.date %> + <%= element.userId %>">Edit</button></td>
-       
-       </tr>
-       <% }); %>
-    </table>
+<style>
+   *{
+			padding: 0;
+			margin: 0;
+		}
+		body{
+			margin: 50px;
+		}
+		main{
+			widows: 70%;
+			height: auto;
+			padding: 20px;
+			margin: 50px auto;
+			
+			color: #666;
+		}
+		.header{
+			width: 90%;
+			height: 100px;
+			margin: auto;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.items-controller,
+		.search{
+			flex-shrink: 0;
+			display: flex;
+			align-content: center;
+			align-items: center;
 
-    <form action="/expenses/api/v1/getExpenseMonth" method="get">
+		}
+		select{
+		 	padding: 2px;
+	    	margin: 0 10px;
+	   		outline: none;
+	    	cursor: pointer;
+	    	border: none;
+	    	background: transparent;
+		}
+		.field{
+			width: 90%;
+			height: auto;
+			margin: auto;
+		}
+		table{
+			width: 100%;
+			margin: 2px auto;
+			table-layout: auto;
+			color: black;
+			border-collapse: collapse;
+			border-spacing: 0;
+			text-align: left;
+		}
+		th{
+			background-color: #c6dff6;
+			
+		}
+		table tr th, table td{
+			padding: 10px;
+			border: 1px solid black;
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+            
+		}
+		.bottom-field{
+			width: 100%;
+			padding: 20px;
+			margin-top: 20px;
+		}
+		.pagination{
+	      display: flex;
+	      justify-content: center;
+	      align-items: center;
+	    }
+	    .pagination li{
+	      list-style: none;
+	      padding: 2px;
+	      margin: 10px;
+	      flex-shrink: 0;
+	      text-align: center;
+	      border-radius: 5px;
+	      border: 1px solid #999;
+	      color: #999;
+	    }
+	    .pagination li.active{
+	      background: #32d6aa;
+	      color: white;
+	      border-color: #32d6aa;
+
+	    }
+	    .pagination li a{
+	      text-decoration: none;
+	      padding: 3px 8px;
+	      color: inherit;
+	      display: block;
+	      font-family: sans-serif;
+	      font-size: 13px;
+	    }
+	    i.fa-edit{color: lime;}
+		i.fa-trash{color: red;}
+</style>
+
+<%- include("header", {userName:userName}) -%>
+<main>
+    <section class="header">
+        <div class="items-controller">
+            <h5>Show</h5>
+            <select name="" id="itemperpage">
+                <option value="8" selected>8</option>
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <h5>Per Page</h5>
+        </div>
+        <div class="items-controller">
+		
+		</div>
+    </section>
+    <section class="field">
+        
+    <table>
+      <thead>
+        <tr>
+           
+            <th>#</th>
+            <th>Date</th>
+            <th>Medical Expense<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16"  data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Money spent on medicines, checkup etc.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+					
+			</svg ></th>
+            <th>Personal Expense<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Money spent on entertainment, outdoor trips, gadgets, ordering food etc.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+			  </svg></th>
+            <th>Bills<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Money spent on bill payments, recharges, rent, fees, EMIs etc.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+			  </svg></th>
+            <th>Household Expense<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Money spent on groceries and other household items.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+			  </svg></th>
+            <th>Investment<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Money spent future investments like FD, Direct stocks, mutual funds, gold etc.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+			  </svg></th>
+            <th>Gift Expense<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Money spent on Gifts.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+			  </svg></th>
+            <th>Bulk Expense<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Single spent of more than 50k like on Laptop, Insurance premium etc.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+			  </svg></th>
+            <th>Miscellaneous<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Expenses other than the categories mentioned.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+			  </svg></th>
+            <th>Total</th>
+            <th>Remarks<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Brief description of your Expenses. Eg:- Mom medicines, Zomato and Wifi Recharge.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+			  </svg></th>
+            <th>Sources<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Mode(s) of payment like Cash, Credit card , Bank Name etc.">
+				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+				<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+			  </svg></th>
+            
+                      <th>Edit</th>
+           </tr>
+      </thead>
+       
+       <tbody>
+        <% arr.forEach((element,index)=>{ %>
+        <tr>
+            
+            <th scope="row"><%=index+1 %></th>
+                <td><%= element.date %></td>
+                <td>₹<%= element.Medical %></td>
+                <td>₹<%= element.Entertainment %></td>
+                <td>₹<%= element.Bills %></td>
+                <td>₹<%= element.Groceries %></td>
+                <td>₹<%= element.Investment %></td>
+                <td>₹<%= element.Gifts %></td>
+                <td>₹<%= element.HugeExpense %></td>
+                <td>₹<%= element.Miscellaneous %></td>
+                <td>₹<%= element.Total %></td>
+                <td><%= element.Remarks %></td>
+                <td><%= element.Source %></td>
+                
+                <td>
+                <i class="fa fa-edit" onclick="window.location.href='/expenses/api/v1/edit/<%= element.date %>'"></i>
+                
+            </td>
+           
+           </tr>
+           <% }); %>
+       </tbody>
+   
+    </table>
+    <div class="bottom-field">
+        <ul class="pagination">
+          <li class="prev"><a href="#" id="prev">&#139;</a></li>
+            <!-- page number here -->
+          <li class="next"><a href="#" id="next">&#155;</a></li>
+        </ul>
+    </div>
+</section>
+
+</main>
+    <script>
+     var tbody = document.querySelector("tbody");
+		var pageUl = document.querySelector(".pagination");
+		var itemShow = document.querySelector("#itemperpage");
+		var tr = tbody.querySelectorAll("tr");
+		var emptyBox = [];
+		var index = 1;
+		var itemPerPage = 8;
+
+		for(let i=0; i<tr.length; i++){ emptyBox.push(tr[i]);}
+
+		itemShow.onchange = giveTrPerPage;
+		function giveTrPerPage(){
+			itemPerPage = Number(this.value);
+			// console.log(itemPerPage);
+			displayPage(itemPerPage);
+			pageGenerator(itemPerPage);
+			getpagElement(itemPerPage);
+		}
+
+		function displayPage(limit){
+			tbody.innerHTML = '';
+			for(let i=0; i<limit; i++){
+				tbody.appendChild(emptyBox[i]);
+			}
+			const  pageNum = pageUl.querySelectorAll('.list');
+			pageNum.forEach(n => n.remove());
+		}
+		displayPage(itemPerPage);
+
+		function pageGenerator(getem){
+			const num_of_tr = emptyBox.length;
+			if(num_of_tr <= getem){
+				pageUl.style.display = 'none';
+			}else{
+				pageUl.style.display = 'flex';
+				const num_Of_Page = Math.ceil(num_of_tr/getem);
+				for(i=1; i<=num_Of_Page; i++){
+					const li = document.createElement('li'); li.className = 'list';
+					const a =document.createElement('a'); a.href = '#'; a.innerText = i;
+					a.setAttribute('data-page', i);
+					li.appendChild(a);
+					pageUl.insertBefore(li,pageUl.querySelector('.next'));
+				}
+			}
+		}
+		pageGenerator(itemPerPage);
+		let pageLink = pageUl.querySelectorAll("a");
+		let lastPage =  pageLink.length - 2;
+		
+		function pageRunner(page, items, lastPage, active){
+			for(button of page){
+				button.onclick = e=>{
+					const page_num = e.target.getAttribute('data-page');
+					const page_mover = e.target.getAttribute('id');
+					if(page_num != null){
+						index = page_num;
+
+					}else{
+						if(page_mover === "next"){
+							index++;
+							if(index >= lastPage){
+								index = lastPage;
+							}
+						}else{
+							index--;
+							if(index <= 1){
+								index = 1;
+							}
+						}
+					}
+					pageMaker(index, items, active);
+				}
+			}
+
+		}
+		var pageLi = pageUl.querySelectorAll('.list'); pageLi[0].classList.add("active");
+		pageRunner(pageLink, itemPerPage, lastPage, pageLi);
+
+		function getpagElement(val){
+			let pagelink = pageUl.querySelectorAll("a");
+			let lastpage =  pagelink.length - 2;
+			let pageli = pageUl.querySelectorAll('.list');
+			pageli[0].classList.add("active");
+			pageRunner(pagelink, val, lastpage, pageli);
+			
+		}
+	
+		
+		
+		function pageMaker(index, item_per_page, activePage){
+			const start = item_per_page * index;
+			const end  = start + item_per_page;
+			const current_page =  emptyBox.slice((start - item_per_page), (end-item_per_page));
+			tbody.innerHTML = "";
+			for(let j=0; j<current_page.length; j++){
+				let item = current_page[j];					
+				tbody.appendChild(item);
+			}
+			Array.from(activePage).forEach((e)=>{e.classList.remove("active");});
+     		activePage[index-1].classList.add("active");
+		}
+
+
+
+
+
+		
+    </script>
+
+    <!-- <form action="/expenses/api/v1/getExpenseMonth" method="get">
         <input type="number" name="year">
         <input type="number" name="month">
         <button type="submit">Submit</button>
-    </form>
+    </form> -->
 
-</body>
-</html>
+    
+
+    <%- include("footer") -%>

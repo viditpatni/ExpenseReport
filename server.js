@@ -17,6 +17,7 @@ const app=express();
 
 app.use(bodyParser.urlencoded({extended:true}));
 
+app.use(express.static("public"))
 
 
 app.use(json2xls.middleware)
@@ -40,10 +41,6 @@ db.sequelize.sync({force:false})
 require("./routes/auth.routes")(app);
 require("./routes/expenses.routes")(app);
 
-app.get("/", function(req, res){
-
-    res.render('home')
-})
 
 
 

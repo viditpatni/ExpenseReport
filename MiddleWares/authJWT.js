@@ -7,7 +7,7 @@ const verifyToken=(req, res, next)=>{
 let token=localStorage.getItem("token");
 
 
-if(!token) return res.status(403).send("Token is missing");
+if(!token) return res.render('login', {message:""});
 
 else{
     jwt.verify(token, process.env.SECRET_KEY, async function(err, decoded){
@@ -21,11 +21,8 @@ else{
         next();
     })
 }
-
-
-
-
 }
+
 module.exports={
     verifyToken
 }

@@ -7,47 +7,47 @@ module.exports=(Sequelize, sequelize)=>{
        },
 
         Medical:{
-            type:Sequelize.INTEGER,
+            type:Sequelize.DOUBLE,
             defaultValue:0
         },
 
         Entertainment:{
-            type:Sequelize.INTEGER,
+            type:Sequelize.DOUBLE,
             defaultValue:0
         },
 
         Bills:{
-            type:Sequelize.INTEGER,
+            type:Sequelize.DOUBLE,
             defaultValue:0
         },
 
         Groceries:{
-            type:Sequelize.INTEGER,
+            type:Sequelize.DOUBLE,
             defaultValue:0
         },
         
         Investment: {
-            type:Sequelize.INTEGER,
+            type:Sequelize.DOUBLE,
             defaultValue:0
         },
 
         Gifts: {
-            type:Sequelize.INTEGER,
+            type:Sequelize.DOUBLE,
             defaultValue:0
         },
 
         HugeExpense:{
-            type:Sequelize.INTEGER,
+            type:Sequelize.DOUBLE,
             defaultValue:0
         },
 
         Miscellaneous:{
-            type:Sequelize.INTEGER,
+            type:Sequelize.DOUBLE,
             defaultValue:0
         },
 
         Total:{
-            type:Sequelize.INTEGER,
+            type:Sequelize.DOUBLE,
             defaultValue:0
         },
 

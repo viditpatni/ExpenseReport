@@ -1,0 +1,137 @@
+
+    <%- include("header", {userName:userName}) -%>
+    <% let month = new Date().getMonth()+1, year = new Date().getFullYear() %>
+
+    <h3 style="margin-top: 60px;text-align: center;" class="mb-3">Your Dashboard</h3>
+    <div class="d-flex justify-content-beween" style="border-bottom: 1px solid black;">
+        <div class="pt-3" id="myDiv" style="border-right: 1px solid black;"></div>
+        <div class="pt-3 pe-3 d-flex justify-content-beween"> 
+        <div id="myDiv1"></div>
+        <div class="me-2">
+          <% if(newM) { %>
+            <select class="form-select" style="width: fit-content;" name="" id="mySelect" onchange="window.location.href=`/expenses/api/v1/getCategoryExpense/${this.value}/<%= year %>`">
+                
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+             </select> 
+       <% } %>
+      <% if(!newM) { %>
+        <select class="form-select" name="" style="width: fit-content;" id="mySelect" onchange="window.location.href=`/expenses/api/v1/getCategoryExpense/${this.value}`">
+        
+          <% for(let i=year;i>=year-50;i--){ %>
+            <option value="<%= i %>"><%= i %></option>
+            <% } %>
+        </select>
+        <% } %>
+      </div>
+      <div>
+        <% if(!newM) { %>
+        <button class="btn btn-primary" onclick="window.location.href='/expenses/api/v1/getCategoryExpense/<%= month %>/<%= year %>'">Show Monthly Report</button>
+        <% } %>
+        <% if(newM) { %> 
+        <button class="btn btn-primary" onclick="window.location.href='/expenses/api/v1/getCategoryExpense/<%=year %>'">Show Yearly Report</button>
+        <% } %>
+      </div>
+      </div>
+        
+     
+    
+    </div>
+    <div id="myDiv2" class="m-2"></div>
+    <script>
+      
+      const config = {
+  displayModeBar: false, // this is the line that hides the bar.
+};
+
+        var data = [{
+           values: ["<%= expense.Medical %>", "<%= expense.Entertainment %>", "<%= expense.Bills %>", "<%= expense.Groceries %>", "<%= expense.Investment %>", "<%= expense.Gifts %>", "<%= expense.HugeExpense %>", "<%= expense.Miscellaneous %>"],
+           labels: [`Medical`, `Personal Expenses`, `Bills`, `Household`, `Investment`, `Gifts`, `Bulk Expense`, `Miscellaneous`],
+           type: 'pie',
+           automargin: true,
+           textinfo: "label+percent",
+           insidetextorientation: "radial"
+        }];
+  
+        var layout = {
+            title: 'Overall Report',
+           height: 600,
+           width: 600,
+           showlegend:false
+        };
+  
+        Plotly.newPlot('myDiv', data, layout, config);
+  
+      
+  
+  
+
+    if('<%=newM %>') document.querySelector('#mySelect').value='<%=newM%>';
+   else document.querySelector('#mySelect').value='<%=newY%>';
+ 
+    
+    var data1 = [{
+         values: ["<%= expense1.Medical %>", "<%= expense1.Entertainment %>", "<%= expense1.Bills %>", "<%= expense1.Groceries %>", "<%= expense1.Investment %>", "<%= expense1.Gifts %>", "<%= expense1.HugeExpense %>", "<%= expense1.Miscellaneous %>"],
+         labels: [`Medical`, `Personal Expenses`, `Bills`, `Household`, `Investment`, `Gifts`, `Bulk Expense`, `Miscellaneous`],
+         type: 'pie',
+         automargin: true,
+         textinfo: "label+percent",
+         insidetextorientation: "radial"
+      }];
+
+      let sel= document.querySelector('#mySelect');
+      let title='';
+      if('<%=newM%>') title=sel.options[sel.selectedIndex].text+', '+'<%=year %>' + ' Report'
+      else title=sel.options[sel.selectedIndex].text + ' Report'
+      
+      var layout1 = {
+        title:title,
+         height: 600,
+         width: 600,
+         showlegend:false
+         
+      };
+
+      Plotly.newPlot('myDiv1', data1, layout1, config);
+      
+    
+var trace9 = {
+  x: ['January', 'Fabruary', 'March', 'April','May','June','July','August','Sept','Oct','Nov','Dec'],
+  y: JSON.parse("[" + "<%=expense2.Total %>" + "]"),
+  name: 'Total',
+  type: 'scatter'
+};
+
+var data2 = [trace9];
+
+var layout2 = {
+  
+title:"This Year's Expense Trends:",
+  xaxis: {
+    title: 'Month',
+   showgrid:false
+  },
+  yaxis: {
+    title: 'Amount (₹)',
+    showgrid:false,
+    rangemode: 'nonnegative'
+  },
+  showlegend:false
+};
+
+
+
+Plotly.newPlot('myDiv2', data2, layout2, config);
+     </script>
+      <%- include("footer") -%>
+

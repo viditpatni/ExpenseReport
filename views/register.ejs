@@ -1,18 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/expenses/api/v1/auth/signup" method="post">
+<%- include("header", {userName:null}) -%>
+    
 
-        <input type="text" name="Name">
-        <input type="email" name="email">
-        <input type="password" name="password">
-        <button type="submit">Signup</button>
-    </form>
-</body>
-</html>
+    <div class="container" style="margin-top: 50px;">
+        <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5">
+              <div class="card-body p-4 p-sm-5">
+                <h5 class="card-title text-center mb-5 fw-light fs-5">Register</h5>
+                <form action="/expenses/api/v1/auth/signup" method="post" onsubmit="return verify()">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput1" placeholder="Full Name" name="Name" required>
+                        <label for="floatingInput1">Full Name</label>
+                    </div>
+                  <div class="form-floating mb-3">
+                   
+                    <input type="email" class="form-control" id="floatingInput2" placeholder="name@example.com" name="email" required>
+                    <label for="floatingInput2">Email address</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required onkeyup='check();'>
+                    <label for="password">Password</label>
+                  </div>
+
+                  <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="confirm_password" placeholder="Password" name="cp" required onkeyup='check();'>
+                    <label for="confirm_password">Confirm Password</label>
+                  </div>
+    
+                  <div id='message' class="text-center m-4"></div>
+                  <div class="d-grid">
+                    <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign Up
+                    </button>
+                
+                  </div>
+
+                  <div class="d-flex align-items-center justify-content-center pb-4 m-4">
+                    <p class="mb-0 me-4">Already have an account?</p>
+                    <button onclick="window.location.href='/expenses/api/v1/auth/signin'" type="button" class="btn btn-primary btn-login">Login</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="\script\temp.js"></script>
+
+    <%- include("footer") -%>
+
+    

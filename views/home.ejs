@@ -1,25 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include("header", {userName:userName}) -%>
+   
+<div class="container">
+    <label for="start">Start month:</label>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<input type="month" id="start" name="start"
+       min="2016-03" value="2018-05">
+       <button onclick="clicked()"></button>
+</div>
 
+       <script>
+        function clicked(){
+            console.log(typeof document.getElementById("start").value)
+        }
+       </script>
 
+    
 
-</head>
-
-<body>
-
-    <form action="/expenses/api/v1/auth/signin" method="get">
-        <button id="login" type="submit">Login</button>
-    </form>
-    <form action="/expenses/api/v1/auth/signup" method="get">
-        <button id="signup" type="submit">Signup</button>
-    </form>
-
-</body>
-
-</html>
+    <%- include("footer") -%>

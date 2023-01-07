@@ -3,9 +3,11 @@ const {authJWT}=require("../MiddleWares")
 
 module.exports=(app)=>{
 
-    app.get("/expenses/api/v1/addExpense", (req, res)=>{
-        res.render("addExpense")
+    app.get("/expenses/api/v1/addExpense", authJWT.verifyToken, (req, res)=>{
+        res.render("addExpense",{userName:req.user.Name})
     })
+
+    app.get("/expenses/api/v1/edit/:date", authJWT.verifyToken, expenseController.edit);
  
     app.post("/expenses/api/v1/addExpense",authJWT.verifyToken, expenseController.addOrUpdate);
 
@@ -15,12 +17,12 @@ module.exports=(app)=>{
 
     app.get("/expenses/api/v1/getExpenseYear", authJWT.verifyToken,expenseController.getUserExpenseByYear);
 
-    app.get("/expenses/api/v1/getCategoryExpense", authJWT.verifyToken,expenseController.getUserExpenseByCategory)
+    app.get("/expenses/api/v1/getCategoryExpense/:month/:year", authJWT.verifyToken,expenseController.categoryExpense)
 
-    app.get("/expenses/api/v1/getCategoryExpenseMonth", authJWT.verifyToken,expenseController.categoryExpenseByMonth)
+    app.get("/expenses/api/v1/getCategoryExpense/:year", authJWT.verifyToken,expenseController.categoryExpense)
 
-    app.get("/expenses/api/v1/getCategoryExpenseYear", authJWT.verifyToken,expenseController.categoryExpenseByYear)
-
+    app.post("/expenses/api/v1/delete/", authJWT.verifyToken, expenseController.delete)
     
+    app.get("/expenses/api/v1/getInsight", authJWT.verifyToken, expenseController.insight);
 
 }
